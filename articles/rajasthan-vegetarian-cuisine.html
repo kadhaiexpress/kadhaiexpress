@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How Rajasthan developed one of India’s richest and most sophisticated vegetarian cuisines despite its arid landscape.">
+    <title>Rajasthan’s Magnificent Vegetarian Cuisine • Kadhai Express</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .prose p { line-height: 1.8; color: #374151; }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(to right, #C2410C, #166534); z-index: 9999; }
+    </style>
+</head>
+<body class="bg-[#FDF8F0]">
+    <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+    
+    <nav class="bg-white border-b">
+        <div class="max-w-screen-xl mx-auto px-6 py-4 flex justify-between">
+            <a href="../index.html" class="font-bold text-xl">Kadhai Express</a>
+            <a href="../articles.html" class="text-sm px-4 py-2 rounded-2xl border">← All Articles</a>
+        </div>
+    </nav>
+
+    <article class="max-w-screen-xl mx-auto px-6 pt-10 pb-20">
+        <div class="max-w-[72ch] mx-auto">
+            <div class="flex items-center gap-x-3 text-sm text-gray-500 mb-4">
+                <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-2xl text-xs font-medium">REGIONAL • INDIA</span>
+                <span>July 2026</span>
+                <span>•</span>
+                <span>11 min read</span>
+            </div>
+            
+            <h1 class="text-5xl font-bold tracking-tighter">Rajasthan’s Magnificent Vegetarian Cuisine</h1>
+            <p class="mt-4 text-xl text-gray-600">Despite its desert landscape, Rajasthan created one of India’s richest and most sophisticated vegetarian traditions — from royal kitchens to village homes.</p>
+
+            <div class="mt-6">
+                <button id="read-aloud-btn" class="inline-flex items-center gap-x-2 px-5 py-2.5 bg-emerald-600 text-white text-sm font-semibold rounded-3xl">
+                    <i data-lucide="volume-2" class="w-4 h-4"></i> Listen to this article
+                </button>
+            </div>
+
+            <div class="prose prose-lg mt-10">
+                <p>Rajasthan has one of the highest percentages of vegetarians in India. Its cuisine evolved out of necessity — limited water, extreme climate, and strong Jain and Vaishnav influences — yet it became incredibly flavorful and diverse.</p>
+
+                <h2>Signature Dishes</h2>
+                <ul>
+                    <li><strong>Dal Baati Churma</strong> — The iconic trio</li>
+                    <li><strong>Ker Sangri</strong> — Desert beans and berries</li>
+                    <li><strong>Gatte ki Sabzi</strong> — Gram flour dumplings in yogurt gravy</li>
+                    <li><strong>Panchmel Dal</strong> — Five-lentil mix</li>
+                    <li><strong>Laal Maas</strong> (vegetarian versions with soya or mushrooms)</li>
+                </ul>
+
+                <p>The use of spices, ghee, and creative preservation techniques turned scarcity into culinary richness. Today, Rajasthani vegetarian food is celebrated across India and gaining global attention.</p>
+            </div>
+
+            <div class="mt-12 text-sm text-gray-500">
+                Sources: Traditional recipes, Rajasthan tourism board, food historians.
+            </div>
+        </div>
+    </article>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        function initReadAloud() {
+            const btn = document.getElementById('read-aloud-btn');
+            if (!btn) return;
+            let speaking = false;
+            btn.addEventListener('click', () => {
+                const synth = window.speechSynthesis;
+                if (!synth) { alert('Text-to-speech not supported'); return; }
+                if (speaking) { synth.cancel(); speaking = false; btn.innerHTML = '<i data-lucide="volume-2" class="w-4 h-4 inline"></i> Listen'; return; }
+                const text = document.querySelector('article').innerText;
+                const u = new SpeechSynthesisUtterance(text);
+                u.onend = () => { speaking = false; btn.innerHTML = '<i data-lucide="volume-2" class="w-4 h-4 inline"></i> Listen'; };
+                synth.speak(u);
+                speaking = true;
+                btn.innerHTML = 'Stop';
+            });
+        }
+        function initProgress() {
+            const bar = document.getElementById('progress-bar');
+            window.addEventListener('scroll', () => {
+                const percent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+                bar.style.width = Math.min(percent, 100) + '%';
+            });
+        }
+        window.onload = () => { 
+            if (typeof lucide !== 'undefined') lucide.createIcons(); 
+            initReadAloud(); 
+            initProgress(); 
+        };
+    </script>
+</body>
+</html>

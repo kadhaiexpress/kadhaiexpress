@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kadhai Express — In-depth stories, authentic recipes, and data-driven insights on vegetarian food. India-focused with global roots, trends, history, and sustainable sourcing. World-class journalism on plant-based cuisine.">
+    <meta name="keywords" content="vegetarian food, Indian vegetarian recipes, global vegetarian trends, plant-based cuisine, vegetarian history, kadhai recipes, sustainable food, India food culture">
+    <meta property="og:title" content="Kadhai Express | Vegetarian Food Stories, Recipes & Global Trends">
+    <meta property="og:description" content="Explore the rich world of vegetarian cuisine — deeply rooted in India, connected across the globe. Authentic recipes, compelling stories, and trusted data.">
+    <meta property="og:image" content="assets/images/hero-thali.jpg">
+    <meta property="og:url" content="https://kadhaiexpress.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Kadhai Express | Vegetarian Food, Recipes &amp; Global Trends from India &amp; Beyond</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function initTailwind() {
+            document.documentElement.style.setProperty('--accent', '#166534');
+            // Enable dark mode with class strategy
+            tailwind.config = {
+                darkMode: 'class',
+                theme: {
+                    extend: {}
+                }
+            };
+        }
+    </script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:wght@400&amp;display=swap');
+        
+        :root {
+            --primary: #C2410C;
+            --accent: #166534;
+            --cream: #FDF8F0;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-serif {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .food-gradient {
+            background: linear-gradient(135deg, #C2410C 0%, #9F3410 100%);
+        }
+
+        .section-header {
+            font-size: 2.25rem;
+            line-height: 1.1;
+            font-weight: 700;
+            color: #1F2937;
+        }
+
+        .article-card, .recipe-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .article-card:hover, .recipe-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .nav-link {
+            transition: color 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            color: #C2410C;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 0.125rem 0.625rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .food-shadow {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        .prose-custom h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: #1F2937;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .prose-custom p {
+            color: #374151;
+            line-height: 1.75;
+        }
+
+        .metric-card {
+            background: white;
+            border: 1px solid #E5E7EB;
+        }
+    </style>
+</head>
+<body class="bg-[#FDF8F0] text-gray-800">
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="px-8 py-5 flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center gap-x-3">
+                    <div class="w-11 h-11 bg-[#C2410C] rounded-2xl flex items-center justify-center shadow-inner">
+                        <span class="text-white text-3xl">🍲</span>
+                    </div>
+                    <div>
+                        <span class="font-bold text-3xl tracking-tighter text-gray-900">Kadhai</span>
+                        <span class="font-semibold text-3xl tracking-tighter text-[#C2410C]">Express</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-x-9 text-sm font-medium">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-[#C2410C]">Home</a>
+                    <a href="articles.html" class="nav-link text-gray-700 hover:text-[#C2410C]">Articles</a>
+                    <a href="recipes.html" class="nav-link text-gray-700 hover:text-[#C2410C]">Recipes</a>
+                    <a href="trends.html" class="nav-link text-gray-700 hover:text-[#C2410C]">Trends &amp; Data</a>
+                    <a href="about.html" class="nav-link text-gray-700 hover:text-[#C2410C]">About</a>
+                </div>
+
+                <!-- Search & CTA -->
+                <div class="flex items-center gap-x-4">
+                    <!-- Search -->
+                    <div class="relative hidden md:block w-72">
+                        <input type="text" 
+                               id="global-search"
+                               placeholder="Search vegetarian stories, recipes..." 
+                               class="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:border-[#C2410C] rounded-3xl text-sm placeholder:text-gray-400 focus:outline-none transition-colors">
+                        <i data-lucide="search" class="absolute left-4 top-3.5 w-4 h-4 text-gray-400"></i>
+                    </div>
+
+                    <!-- Dark Mode Toggle -->
+                    <button id="dark-mode-toggle" 
+                            class="w-10 h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-2xl transition-colors"
+                            aria-label="Toggle dark mode">
+                        <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
+                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                    </button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn"
+                            class="md:hidden w-10 h-10 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-2xl transition-colors">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                    
+                    <a href="articles.html" 
+                       class="hidden md:inline-flex items-center justify-center px-6 py-2.5 bg-[#C2410C] hover:bg-[#9F3410] text-white text-sm font-semibold rounded-3xl transition-all active:scale-[0.985]">
+                        Start Exploring
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative h-[92vh] min-h-[680px] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center" 
+             style="background-image: url('assets/images/hero-thali.jpg')">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center gap-x-2 bg-white/95 backdrop-blur-md px-5 py-1.5 rounded-3xl mb-6 shadow-sm">
+                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span class="text-sm font-semibold tracking-[1px] text-gray-700">INDIA • GLOBAL • VEGETARIAN</span>
+            </div>
+            
+            <h1 class="text-6xl md:text-7xl lg:text-7xl font-bold tracking-tighter text-white leading-[1.05] mb-6">
+                The world’s most<br>beautiful vegetarian<br>stories start here.
+            </h1>
+            
+            <p class="max-w-2xl mx-auto text-xl md:text-2xl text-white/90 font-light tracking-tight mb-10">
+                Deeply rooted in India. Inspired by every corner of the globe.<br>
+                Thoughtful journalism, authentic recipes, and trusted data.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="articles.html" 
+                   class="group inline-flex items-center justify-center gap-x-3 bg-white text-[#C2410C] hover:bg-gray-100 px-9 py-4 rounded-3xl font-semibold text-lg transition-all active:scale-[0.985] shadow-xl">
+                    Read Latest Articles
+                    <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-0.5 transition"></i>
+                </a>
+                <a href="recipes.html" 
+                   class="inline-flex items-center justify-center gap-x-3 border border-white/80 hover:bg-white/10 text-white px-8 py-4 rounded-3xl font-semibold text-lg transition-all active:scale-[0.985]">
+                    Explore Recipes
+                </a>
+            </div>
+            
+            <div class="mt-12 flex justify-center">
+                <div class="flex items-center gap-x-8 text-white/70 text-sm tracking-widest">
+                    <div>29.5% OF INDIA IS VEGETARIAN</div>
+                    <div class="w-px h-3 bg-white/40"></div>
+                    <div>GROWING GLOBAL PLANT-BASED MOVEMENT</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block">
+            <div class="flex flex-col items-center text-white/60 text-xs tracking-[2px]">
+                SCROLL TO BEGIN <i data-lucide="chevron-down" class="w-4 h-4 mt-1"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Trust Bar -->
+    <div class="border-b border-gray-200 bg-white py-4">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm text-gray-500">
+                <div class="flex items-center gap-x-2">
+                    <i data-lucide="award" class="w-4 h-4"></i>
+                    <span>Original, sourced journalism</span>
+                </div>
+                <div class="flex items-center gap-x-2">
+                    <i data-lucide="globe" class="w-4 h-4"></i>
+                    <span>India + 40+ countries covered</span>
+                </div>
+                <div class="flex items-center gap-x-2">
+                    <i data-lucide="leaf" class="w-4 h-4 text-emerald-600"></i>
+                    <span>100% vegetarian focus</span>
+                </div>
+                <div class="flex items-center gap-x-2">
+                    <i data-lucide="scale" class="w-4 h-4"></i>
+                    <span>Neutral • Evidence-based</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mission / About Intro -->
+    <section class="max-w-screen-2xl mx-auto px-8 pt-16 pb-12">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-block px-4 py-1 bg-[#C2410C]/10 text-[#C2410C] rounded-2xl text-xs font-bold tracking-[1.5px] mb-4">OUR PHILOSOPHY</div>
+            <h2 class="section-header tracking-tighter">We celebrate the extraordinary<br>world of vegetarian food.</h2>
+            <p class="mt-6 text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Kadhai Express is a platform dedicated to the rich, diverse, and evolving story of vegetarian cuisine. 
+                We focus on India’s unparalleled vegetarian heritage while exploring how these traditions connect with — 
+                and are enriched by — global food cultures, history, science, and sustainability.
+            </p>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                Every article is researched with care. Every recipe is tested. Every statistic is credited. 
+                We remain neutral, respectful, and committed to accuracy.
+            </p>
+        </div>
+    </section>
+
+    <!-- Featured Articles -->
+    <section class="max-w-screen-2xl mx-auto px-8 pb-16">
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <span class="text-[#C2410C] text-sm font-bold tracking-widest">CURATED STORIES</span>
+                <h3 class="text-4xl font-bold tracking-tighter text-gray-900">Featured Articles</h3>
+            </div>
+            <a href="articles.html" class="hidden md:flex items-center gap-x-2 text-sm font-semibold text-[#C2410C] hover:underline">
+                VIEW ALL ARTICLES <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Article 1 -->
+            <a href="articles/the-enduring-legacy-of-indian-vegetarianism.html" class="article-card group block bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm">
+                <div class="relative h-56 overflow-hidden">
+                    <img src="assets/images/hero-thali.jpg" alt="Colorful Indian vegetarian thali representing heritage" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute top-4 left-4">
+                        <span class="tag bg-white/95 text-[#C2410C] shadow-sm">Heritage • Culture</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-x-2 text-xs text-gray-500 mb-3">
+                        <span>12 min read</span>
+                        <span>•</span>
+                        <span>July 2026</span>
+                    </div>
+                    <h4 class="font-semibold text-xl leading-tight tracking-tight group-hover:text-[#C2410C] transition-colors">The Enduring Legacy of Indian Vegetarianism</h4>
+                    <p class="mt-3 text-sm text-gray-600 line-clamp-3">From ancient Vedic texts to modern thalis — how India became home to the world’s largest vegetarian population and why its traditions continue to shape global food conversations.</p>
+                    <div class="mt-5 flex items-center text-xs text-gray-500">
+                        <span>By Priya Sharma</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Article 2 -->
+            <a href="articles/from-the-americas-to-the-indian-thali.html" class="article-card group block bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm">
+                <div class="relative h-56 overflow-hidden">
+                    <img src="assets/images/global-fusion.jpg" alt="Global fusion vegetarian dishes showing ingredient exchange" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute top-4 left-4">
+                        <span class="tag bg-white/95 text-emerald-700 shadow-sm">History • Ingredients</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-x-2 text-xs text-gray-500 mb-3">
+                        <span>15 min read</span>
+                        <span>•</span>
+                        <span>July 2026</span>
+                    </div>
+                    <h4 class="font-semibold text-xl leading-tight tracking-tight group-hover:text-[#C2410C] transition-colors">From the Americas to the Indian Thali</h4>
+                    <p class="mt-3 text-sm text-gray-600 line-clamp-3">How tomatoes, potatoes, chilies, and maize — brought from the New World — transformed Indian vegetarian cuisine forever. The fascinating story of culinary globalization.</p>
+                    <div class="mt-5 flex items-center text-xs text-gray-500">
+                        <span>By Dr. Anand Krishnan</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Article 3 -->
+            <a href="articles/the-rise-of-plant-based-eating-2026.html" class="article-card group block bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm">
+                <div class="relative h-56 overflow-hidden">
+                    <img src="assets/images/kadhai-mushroom.jpg" alt="Modern plant-based kadhai dish" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute top-4 left-4">
+                        <span class="tag bg-white/95 text-amber-700 shadow-sm">Trends • Data</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-x-2 text-xs text-gray-500 mb-3">
+                        <span>9 min read</span>
+                        <span>•</span>
+                        <span>July 2026</span>
+                    </div>
+                    <h4 class="font-semibold text-xl leading-tight tracking-tight group-hover:text-[#C2410C] transition-colors">The Rise of Plant-Based Eating: Data from 2026</h4>
+                    <p class="mt-3 text-sm text-gray-600 line-clamp-3">What the latest numbers reveal about vegetarian and vegan adoption worldwide, India’s unique position, market growth, and what it means for the future of food.</p>
+                    <div class="mt-5 flex items-center text-xs text-gray-500">
+                        <span>By Research Desk</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Article 4 -->
+            <a href="articles/rajasthan-vegetarian-cuisine.html" class="article-card group block bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm">
+                <div class="relative h-56 overflow-hidden bg-gray-100">
+                    <img src="https://picsum.photos/id/292/600/400" alt="Rajasthan vegetarian thali with rich curries and breads" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute top-4 left-4">
+                        <span class="tag bg-white/95 text-orange-700 shadow-sm">Regional • India</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-x-2 text-xs text-gray-500 mb-3">
+                        <span>11 min read</span>
+                        <span>•</span>
+                        <span>June 2026</span>
+                    </div>
+                    <h4 class="font-semibold text-xl leading-tight tracking-tight group-hover:text-[#C2410C] transition-colors">Rajasthan’s Magnificent Vegetarian Cuisine</h4>
+                    <p class="mt-3 text-sm text-gray-600 line-clamp-3">Despite its arid landscape, Rajasthan developed one of India’s most sophisticated and flavorful vegetarian traditions — from royal kitchens to village homes.</p>
+                    <div class="mt-5 flex items-center text-xs text-gray-500">
+                        <span>By Meera Rathore</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <div class="mt-8 text-center md:hidden">
+            <a href="articles.html" class="inline-flex items-center gap-x-2 text-sm font-semibold text-[#C2410C]">
+                VIEW ALL ARTICLES <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Trends Snapshot with Charts -->
+    <section id="trends-snapshot" class="bg-white border-y border-gray-200 py-16">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-y-4 mb-10">
+                <div>
+                    <span class="text-emerald-700 text-sm font-bold tracking-widest">DATA • INSIGHTS</span>
+                    <h3 class="text-4xl font-bold tracking-tighter">Vegetarianism in 2026: By the Numbers</h3>
+                </div>
+                <a href="trends.html" class="text-sm font-semibold text-[#C2410C] flex items-center gap-x-1.5 hover:underline">
+                    FULL TRENDS REPORT <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Key Stats Cards -->
+                <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="metric-card rounded-3xl p-6">
+                        <div class="text-5xl font-bold tracking-tighter text-[#C2410C]">29.5%</div>
+                        <div class="mt-2 text-sm font-semibold">of India’s population<br>is vegetarian</div>
+                        <div class="mt-4 text-xs text-gray-500">≈ 276 million people • Source: World Population Review, 2026</div>
+                    </div>
+                    <div class="metric-card rounded-3xl p-6">
+                        <div class="text-5xl font-bold tracking-tighter text-emerald-700">9%</div>
+                        <div class="mt-2 text-sm font-semibold">of India identifies<br>as vegan</div>
+                        <div class="mt-4 text-xs text-gray-500">Highest vegan % globally • 121.5 million people</div>
+                    </div>
+                    <div class="metric-card rounded-3xl p-6">
+                        <div class="text-5xl font-bold tracking-tighter text-amber-700">~$33B</div>
+                        <div class="mt-2 text-sm font-semibold">Global plant-based<br>food market (2026)</div>
+                        <div class="mt-4 text-xs text-gray-500">Projected to reach $54B+ by 2032</div>
+                    </div>
+                </div>
+
+                <!-- Chart 1: Market Growth -->
+                <div class="lg:col-span-7 bg-white border border-gray-200 rounded-3xl p-7">
+                    <div class="flex justify-between items-center mb-5">
+                        <div>
+                            <div class="font-semibold">Global Plant-Based Food Market Growth</div>
+                            <div class="text-xs text-gray-500">USD Billion • Data: MMR Statistics &amp; industry reports</div>
+                        </div>
+                    </div>
+                    <canvas id="market-growth-chart" height="110"></canvas>
+                </div>
+
+                <!-- Chart 2: India Regional -->
+                <div class="lg:col-span-12 bg-white border border-gray-200 rounded-3xl p-7 mt-2">
+                    <div class="mb-5">
+                        <div class="font-semibold">Vegetarian Population by Indian State (Highest %)</div>
+                        <div class="text-xs text-gray-500">Data based on NFHS-5 and state-level surveys • Significant cultural variation exists</div>
+                    </div>
+                    <canvas id="india-states-chart" height="90"></canvas>
+                </div>
+            </div>
+            
+            <p class="text-center text-xs text-gray-500 mt-6 max-w-3xl mx-auto">
+                All statistics are presented with sources. Data years vary; India maintains the world’s largest absolute number of vegetarians. 
+                We update figures as new credible research emerges.
+            </p>
+        </div>
+    </section>
+
+    <!-- Signature Recipes -->
+    <section class="max-w-screen-2xl mx-auto px-8 py-16">
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <span class="text-[#C2410C] text-sm font-bold tracking-widest">KITCHEN TESTED</span>
+                <h3 class="text-4xl font-bold tracking-tighter">Signature Vegetarian Recipes</h3>
+            </div>
+            <a href="recipes.html" class="hidden md:flex items-center gap-x-2 text-sm font-semibold text-[#C2410C] hover:underline">
+                BROWSE ALL RECIPES <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Recipe Card 1 -->
+            <a href="recipes/kadhai-mushroom-masala.html" class="recipe-card group block bg-white rounded-3xl overflow-hidden border border-gray-100">
+                <div class="relative">
+                    <img src="assets/images/kadhai-mushroom.jpg" alt="Kadhai Mushroom Masala - rich and aromatic" class="w-full h-48 object-cover">
+                    <div class="absolute top-3 right-3 bg-white/95 px-3 py-1 rounded-2xl text-xs font-medium shadow">35 min</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex gap-2 mb-3">
+                        <span class="tag bg-emerald-100 text-emerald-700">Vegan</span>
+                        <span class="tag bg-orange-100 text-orange-700">North Indian</span>
+                    </div>
+                    <h4 class="font-semibold text-lg tracking-tight group-hover:text-[#C2410C]">Kadhai Mushroom Masala</h4>
+                    <p class="text-sm text-gray-600 mt-1.5 line-clamp-2">Smoky bell peppers, earthy mushrooms, and aromatic spices in a thick tomato gravy. A restaurant favorite made at home.</p>
+                    <div class="mt-4 flex items-center justify-between text-xs">
+                        <div class="text-gray-500">4 servings • Medium</div>
+                        <div class="text-emerald-600 font-medium">View Recipe →</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Recipe 2 -->
+            <a href="recipes/quinoa-chickpea-curry-bowl.html" class="recipe-card group block bg-white rounded-3xl overflow-hidden border border-gray-100">
+                <div class="relative">
+                    <img src="assets/images/global-fusion.jpg" alt="Quinoa Chickpea Curry Bowl - global fusion" class="w-full h-48 object-cover">
+                    <div class="absolute top-3 right-3 bg-white/95 px-3 py-1 rounded-2xl text-xs font-medium shadow">25 min</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex gap-2 mb-3">
+                        <span class="tag bg-emerald-100 text-emerald-700">Vegan</span>
+                        <span class="tag bg-sky-100 text-sky-700">Fusion</span>
+                    </div>
+                    <h4 class="font-semibold text-lg tracking-tight group-hover:text-[#C2410C]">Quinoa Chickpea Kadhai Bowl</h4>
+                    <p class="text-sm text-gray-600 mt-1.5 line-clamp-2">A modern high-protein bowl combining Indian kadhai spices with quinoa and fresh Mediterranean-style toppings.</p>
+                    <div class="mt-4 flex items-center justify-between text-xs">
+                        <div class="text-gray-500">2 servings • Easy</div>
+                        <div class="text-emerald-600 font-medium">View Recipe →</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- More recipe cards -->
+            <a href="recipes/paneer-butter-masala.html" class="recipe-card group block bg-white rounded-3xl overflow-hidden border border-gray-100">
+                <div class="relative">
+                    <img src="https://picsum.photos/id/312/600/400" alt="Creamy Paneer Butter Masala" class="w-full h-48 object-cover">
+                    <div class="absolute top-3 right-3 bg-white/95 px-3 py-1 rounded-2xl text-xs font-medium shadow">40 min</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex gap-2 mb-3">
+                        <span class="tag bg-amber-100 text-amber-700">Lacto-Veg</span>
+                        <span class="tag bg-orange-100 text-orange-700">Classic</span>
+                    </div>
+                    <h4 class="font-semibold text-lg tracking-tight group-hover:text-[#C2410C]">Paneer Butter Masala</h4>
+                    <p class="text-sm text-gray-600 mt-1.5 line-clamp-2">Silky tomato-cashew gravy with soft paneer cubes. The ultimate comfort dish loved across India and beyond.</p>
+                    <div class="mt-4 flex items-center justify-between text-xs">
+                        <div class="text-gray-500">4 servings • Medium</div>
+                        <div class="text-emerald-600 font-medium">View Recipe →</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="recipes/millet-upma-with-vegetables.html" class="recipe-card group block bg-white rounded-3xl overflow-hidden border border-gray-100">
+                <div class="relative">
+                    <img src="https://picsum.photos/id/1060/600/400" alt="Healthy Millet Upma with vegetables" class="w-full h-48 object-cover">
+                    <div class="absolute top-3 right-3 bg-white/95 px-3 py-1 rounded-2xl text-xs font-medium shadow">20 min</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex gap-2 mb-3">
+                        <span class="tag bg-emerald-100 text-emerald-700">Vegan</span>
+                        <span class="tag bg-lime-100 text-lime-700">Healthy</span>
+                    </div>
+                    <h4 class="font-semibold text-lg tracking-tight group-hover:text-[#C2410C]">Foxtail Millet Vegetable Upma</h4>
+                    <p class="text-sm text-gray-600 mt-1.5 line-clamp-2">Nutritious, quick, and deeply satisfying. A modern take on a South Indian breakfast staple using ancient millets.</p>
+                    <div class="mt-4 flex items-center justify-between text-xs">
+                        <div class="text-gray-500">3 servings • Easy</div>
+                        <div class="text-emerald-600 font-medium">View Recipe →</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Content Strategy Teaser / Scale Message -->
+    <section class="bg-[#1F2937] text-white py-16">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="text-emerald-400 text-sm font-bold tracking-[2px]">SCALING TO 1,000+ WORLD-CLASS ARTICLES</div>
+                <h3 class="text-4xl font-bold tracking-tighter mt-3">Launching with excellence.<br>Growing with purpose.</h3>
+                <p class="mt-6 text-lg text-white/80 max-w-2xl mx-auto">
+                    We are building one of the world’s most comprehensive resources on vegetarian food. 
+                    This site launches with premium original content and a clear roadmap to 1,000+ high-quality articles and recipes 
+                    published on a consistent weekly schedule.
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <a href="#content-plan" class="inline-flex items-center gap-x-2 border border-white/40 hover:bg-white/10 px-8 py-3 rounded-3xl text-sm font-medium transition">
+                        SEE OUR CONTENT ROADMAP
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="max-w-screen-2xl mx-auto px-8 py-16 border-b border-gray-200">
+        <div class="max-w-2xl mx-auto text-center">
+            <h3 class="text-3xl font-bold tracking-tight">Stay connected to the story of vegetarian food.</h3>
+            <p class="mt-3 text-gray-600">Weekly curated stories, new recipes, and data insights delivered to your inbox. No spam, ever.</p>
+            
+            <form class="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="event.preventDefault(); alert('Thank you! In a real deployment this would connect to your email service (e.g. Buttondown, ConvertKit, or Formspree).');">
+                <input type="email" placeholder="your@email.com" required
+                       class="flex-1 px-6 py-3.5 border border-gray-300 focus:border-[#C2410C] rounded-3xl text-sm placeholder:text-gray-400 outline-none">
+                <button type="submit"
+                        class="bg-[#C2410C] hover:bg-[#9F3410] transition-colors text-white font-semibold px-9 py-3.5 rounded-3xl text-sm whitespace-nowrap">
+                    Subscribe Free
+                </button>
+            </form>
+            <p class="text-xs text-gray-500 mt-3">We respect your inbox. Unsubscribe anytime.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-screen-2xl mx-auto px-8 pt-14 pb-10">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-y-10">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-x-2 mb-4">
+                        <div class="w-9 h-9 bg-[#C2410C] rounded-2xl flex items-center justify-center">
+                            <span class="text-white text-2xl">🍲</span>
+                        </div>
+                        <span class="font-bold text-2xl tracking-tighter">Kadhai Express</span>
+                    </div>
+                    <p class="text-sm text-gray-500 pr-4">Documenting and celebrating vegetarian food culture with integrity.</p>
+                </div>
+                
+                <div>
+                    <div class="font-semibold text-sm tracking-wider mb-4 text-gray-900">EXPLORE</div>
+                    <div class="space-y-[9px] text-sm text-gray-600">
+                        <div><a href="articles.html" class="hover:text-[#C2410C]">All Articles</a></div>
+                        <div><a href="recipes.html" class="hover:text-[#C2410C]">All Recipes</a></div>
+                        <div><a href="trends.html" class="hover:text-[#C2410C]">Trends &amp; Data</a></div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="font-semibold text-sm tracking-wider mb-4 text-gray-900">COMPANY</div>
+                    <div class="space-y-[9px] text-sm text-gray-600">
+                        <div><a href="about.html" class="hover:text-[#C2410C]">About Us</a></div>
+                        <div><a href="policies/editorial-policy.html" class="hover:text-[#C2410C]">Editorial Policy</a></div>
+                        <div><a href="policies/copyright.html" class="hover:text-[#C2410C]">Copyright &amp; Usage</a></div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="font-semibold text-sm tracking-wider mb-4 text-gray-900">LEGAL</div>
+                    <div class="space-y-[9px] text-sm text-gray-600">
+                        <div><a href="policies/privacy-policy.html" class="hover:text-[#C2410C]">Privacy Policy</a></div>
+                        <div><a href="policies/terms-of-service.html" class="hover:text-[#C2410C]">Terms of Service</a></div>
+                        <div><a href="policies/content-policy.html" class="hover:text-[#C2410C]">Content Guidelines</a></div>
+                    </div>
+                </div>
+                
+                <div class="col-span-2 md:col-span-1">
+                    <div class="font-semibold text-sm tracking-wider mb-4 text-gray-900">CONNECT</div>
+                    <div class="flex gap-x-4 text-gray-400">
+                        <a href="#" class="hover:text-[#C2410C]"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-[#C2410C]"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-[#C2410C]"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    </div>
+                    <div class="mt-6 text-xs text-gray-500">
+                        © 2026 Kadhai Express.<br>
+                        All rights reserved.<br>
+                        Made with care in India.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-100 py-5 text-center">
+            <p class="text-xs text-gray-500 max-w-screen-2xl mx-auto px-8">
+                Kadhai Express is committed to accurate, neutral, and well-sourced content. 
+                We credit all external sources and follow Indian and international copyright laws. 
+                This is not a substitute for professional nutritional or medical advice.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-black/60 z-[100] backdrop-blur-sm">
+        <div class="bg-white w-4/5 max-w-xs h-full p-8">
+            <div class="flex justify-between items-center mb-8">
+                <div class="flex items-center gap-x-2">
+                    <span class="font-bold text-2xl tracking-tighter">Kadhai Express</span>
+                </div>
+                <button id="close-mobile-menu" class="text-gray-500"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+            
+            <div class="flex flex-col gap-y-5 text-lg font-medium">
+                <a href="index.html" class="py-1">Home</a>
+                <a href="articles.html" class="py-1">Articles</a>
+                <a href="recipes.html" class="py-1">Recipes</a>
+                <a href="trends.html" class="py-1">Trends &amp; Data</a>
+                <a href="about.html" class="py-1">About</a>
+            </div>
+            
+            <div class="mt-auto pt-10">
+                <a href="articles.html" class="block w-full text-center bg-[#C2410C] text-white py-3.5 rounded-3xl font-semibold">Start Exploring</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        function initLucide() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+        
+        // Tailwind script
+        function initTailwind() {
+            document.documentElement.style.setProperty('--accent', '#166534');
+        }
+        
+        // Mobile menu
+        function initMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const closeBtn = document.getElementById('close-mobile-menu');
+            
+            if (btn && menu) {
+                btn.addEventListener('click', () => menu.classList.remove('hidden'));
+                if (closeBtn) closeBtn.addEventListener('click', () => menu.classList.add('hidden'));
+                menu.addEventListener('click', (e) => {
+                    if (e.target === menu) menu.classList.add('hidden');
+                });
+            }
+        }
+        
+        // Global search (simple demo - expands on articles/recipes pages)
+        function initGlobalSearch() {
+            const searchInput = document.getElementById('global-search');
+            if (!searchInput) return;
+            
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && this.value.trim() !== '') {
+                    // In production: redirect to search results or filter
+                    window.location.href = `articles.html?search=${encodeURIComponent(this.value.trim())}`;
+                }
+            });
+            
+            // Bonus: show hint on focus
+            searchInput.addEventListener('focus', function() {
+                if (!this.placeholder.includes('Try')) {
+                    this.placeholder = 'Try: "kadhai", "millets", "history of paneer"...';
+                }
+            });
+        }
+        
+        // Chart.js - Market Growth
+        function initMarketChart() {
+            const ctx = document.getElementById('market-growth-chart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2025', '2026', '2027', '2028', '2029', '2030', '2031', '2032'],
+                    datasets: [{
+                        label: 'Global Plant-Based Market (USD Billion)',
+                        data: [30.41, 32.89, 35.63, 38.65, 42.01, 45.72, 49.84, 54.41],
+                        borderColor: '#C2410C',
+                        backgroundColor: 'rgba(194, 65, 12, 0.08)',
+                        borderWidth: 3,
+                        tension: 0.35,
+                        fill: true,
+                        pointBackgroundColor: '#C2410C',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#F3F4F6' }, ticks: { color: '#6B7280', font: { size: 11 } } },
+                        x: { grid: { color: '#F3F4F6' }, ticks: { color: '#6B7280', font: { size: 11 } } }
+                    },
+                    elements: { line: { borderJoinStyle: 'round' } }
+                }
+            });
+        }
+        
+        // Chart.js - India States
+        function initIndiaStatesChart() {
+            const ctx = document.getElementById('india-states-chart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Rajasthan', 'Haryana', 'Himachal', 'Punjab', 'Gujarat', 'Maharashtra', 'UP', 'Delhi'],
+                    datasets: [{
+                        label: 'Vegetarian Population %',
+                        data: [75, 70, 70, 66, 62, 50, 47, 40],
+                        backgroundColor: '#166534',
+                        borderColor: '#166534',
+                        borderWidth: 0,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, max: 100, grid: { color: '#F3F4F6' }, ticks: { color: '#6B7280', font: { size: 11 }, callback: v => v + '%' } },
+                        x: { grid: { display: false }, ticks: { color: '#6B7280', font: { size: 11 } } }
+                    }
+                }
+            });
+        }
+        
+        // Dark Mode Toggle
+        function initDarkMode() {
+            const toggle = document.getElementById('dark-mode-toggle');
+            if (!toggle) return;
+
+            // Check saved preference or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            }
+
+            toggle.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                const isDark = document.documentElement.classList.contains('dark');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                
+                // Re-init lucide icons after class change
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            });
+        }
+
+        // Keyboard accessibility + init everything
+        function initializeSite() {
+            initLucide();
+            initTailwind();
+            initMobileMenu();
+            initGlobalSearch();
+            initMarketChart();
+            initIndiaStatesChart();
+            initDarkMode();
+            
+            // Easter egg: Press "?" to focus search
+            document.addEventListener('keydown', function(e) {
+                if (e.key === '?' && document.activeElement.tagName === 'BODY') {
+                    e.preventDefault();
+                    const search = document.getElementById('global-search');
+                    if (search) search.focus();
+                }
+            });
+            
+            console.log('%c[Kadhai Express] Website initialized successfully. Ready for GitHub upload.', 'color:#166534');
+        }
+        
+        window.onload = initializeSite;
+    </script>
+</body>
+</html>

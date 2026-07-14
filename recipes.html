@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tested vegetarian recipes from India and around the world. Filter by cuisine, time, difficulty, and dietary preference.">
+    <title>Recipes • Kadhai Express | Authentic Vegetarian Cooking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .recipe-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .recipe-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
+        .filter-active { background-color: #C2410C; color: white; border-color: #C2410C; }
+    </style>
+</head>
+<body class="bg-[#FDF8F0]">
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-8 py-5 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-x-3">
+                <div class="w-10 h-10 bg-[#C2410C] rounded-2xl flex items-center justify-center"><span class="text-white text-2xl">🍲</span></div>
+                <span class="font-bold text-2xl tracking-tighter">Kadhai <span class="text-[#C2410C]">Express</span></span>
+            </a>
+            <div class="flex items-center gap-x-4 text-sm">
+                <a href="articles.html" class="hover:text-[#C2410C]">Articles</a>
+                <a href="recipes.html" class="font-semibold text-[#C2410C]">Recipes</a>
+                <a href="index.html" class="px-5 py-2 rounded-3xl border text-sm">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-screen-2xl mx-auto px-8 pt-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+            <div>
+                <div class="text-xs tracking-[1.5px] text-emerald-700 font-bold">KITCHEN • TESTED • SHARED</div>
+                <h1 class="text-5xl font-bold tracking-tighter">Vegetarian Recipes</h1>
+            </div>
+            <div class="mt-4 md:mt-0 text-sm text-gray-600">40+ recipes in launch collection • New ones added weekly</div>
+        </div>
+
+        <!-- Search + Filters -->
+        <div class="bg-white border border-gray-200 rounded-3xl p-6 mb-8">
+            <div class="flex flex-col lg:flex-row gap-4">
+                <div class="flex-1">
+                    <div class="relative">
+                        <input id="recipe-search" type="text" placeholder="Search recipes (e.g. kadhai, millet, chickpea, quick)" 
+                               class="w-full pl-11 py-3 border border-gray-300 rounded-3xl text-sm focus:border-[#C2410C]">
+                        <i data-lucide="search" class="absolute left-4 top-3.5 w-4 h-4 text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <!-- Quick Filters -->
+                <div class="flex flex-wrap gap-2" id="recipe-filters">
+                    <button data-filter="all" class="filter-active px-4 py-2 text-sm rounded-3xl border">All</button>
+                    <button data-filter="vegan" class="px-4 py-2 text-sm rounded-3xl border hover:bg-gray-50">Vegan</button>
+                    <button data-filter="quick" class="px-4 py-2 text-sm rounded-3xl border hover:bg-gray-50">Under 30 min</button>
+                    <button data-filter="indian" class="px-4 py-2 text-sm rounded-3xl border hover:bg-gray-50">Indian</button>
+                    <button data-filter="fusion" class="px-4 py-2 text-sm rounded-3xl border hover:bg-gray-50">Fusion / Global</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recipe Grid -->
+        <div id="recipe-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-16">
+            <!-- Populated via JS -->
+        </div>
+    </div>
+
+    <footer class="bg-white border-t py-8 text-center text-xs text-gray-500">
+        Recipes are developed and tested for Kadhai Express. Adapt to your taste and dietary needs. © 2026
+    </footer>
+
+    <script>
+        const recipes = [
+            {
+                id: 1,
+                title: "Kadhai Mushroom Masala",
+                time: "35 min",
+                servings: "4",
+                difficulty: "Medium",
+                tags: ["vegan", "indian", "main"],
+                category: "indian",
+                dietary: "vegan",
+                url: "recipes/kadhai-mushroom-masala.html",
+                image: "assets/images/kadhai-mushroom.jpg",
+                description: "Smoky bell peppers and earthy mushrooms in a rich tomato gravy. Restaurant-style at home."
+            },
+            {
+                id: 2,
+                title: "Quinoa Chickpea Kadhai Bowl",
+                time: "25 min",
+                servings: "2",
+                difficulty: "Easy",
+                tags: ["vegan", "fusion", "high-protein"],
+                category: "fusion",
+                dietary: "vegan",
+                url: "recipes/quinoa-chickpea-curry-bowl.html",
+                image: "assets/images/global-fusion.jpg",
+                description: "Modern high-protein bowl with Indian spices and fresh toppings. Ready in under 30 minutes."
+            },
+            {
+                id: 3,
+                title: "Paneer Butter Masala",
+                time: "40 min",
+                servings: "4",
+                difficulty: "Medium",
+                tags: ["lacto-veg", "indian", "classic"],
+                category: "indian",
+                dietary: "lacto",
+                url: "recipes/paneer-butter-masala.html",
+                image: "https://picsum.photos/id/312/600/400",
+                description: "Silky cashew-tomato gravy with soft paneer. The ultimate comfort classic loved worldwide."
+            },
+            {
+                id: 4,
+                title: "Foxtail Millet Vegetable Upma",
+                time: "20 min",
+                servings: "3",
+                difficulty: "Easy",
+                tags: ["vegan", "indian", "healthy", "quick"],
+                category: "indian",
+                dietary: "vegan",
+                url: "recipes/millet-upma-with-vegetables.html",
+                image: "https://picsum.photos/id/1060/600/400",
+                description: "Nutritious South Indian breakfast staple upgraded with ancient millets and seasonal vegetables."
+            },
+            {
+                id: 5,
+                title: "Crispy Chickpea Falafel with Tahini",
+                time: "30 min",
+                servings: "4",
+                difficulty: "Medium",
+                tags: ["vegan", "fusion", "middle-eastern"],
+                category: "fusion",
+                dietary: "vegan",
+                url: "recipes/crispy-chickpea-falafel.html",
+                image: "https://picsum.photos/id/292/600/400",
+                description: "Crispy on the outside, fluffy inside. Serve with fresh salads and creamy tahini sauce."
+            },
+            {
+                id: 6,
+                title: "South Indian Coconut Vegetable Stew",
+                time: "28 min",
+                servings: "4",
+                difficulty: "Easy",
+                tags: ["vegan", "indian", "kerala"],
+                category: "indian",
+                dietary: "vegan",
+                url: "recipes/coconut-vegetable-stew.html",
+                image: "https://picsum.photos/id/312/600/400",
+                description: "Light, fragrant, and deeply satisfying. A Kerala-style vegetable stew with coconut milk."
+            }
+        ];
+
+        function renderRecipes(filtered) {
+            const grid = document.getElementById('recipe-grid');
+            grid.innerHTML = '';
+            
+            filtered.forEach(r => {
+                const card = document.createElement('a');
+                card.href = r.url;
+                card.className = `recipe-card group block bg-white rounded-3xl overflow-hidden border border-gray-100`;
+                card.innerHTML = `
+                    <div class="relative">
+                        <img src="${r.image}" alt="${r.title}" class="w-full h-52 object-cover">
+                        <div class="absolute top-3 right-3 bg-white/95 text-xs font-medium px-3 py-1 rounded-2xl shadow">${r.time}</div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex gap-2 mb-3 flex-wrap">
+                            ${r.tags.map(tag => `<span class="text-[10px] px-2.5 py-px rounded-2xl bg-gray-100 text-gray-600">${tag}</span>`).join('')}
+                        </div>
+                        <h3 class="font-semibold text-lg tracking-tight group-hover:text-[#C2410C]">${r.title}</h3>
+                        <p class="text-sm text-gray-600 mt-1.5 line-clamp-2">${r.description}</p>
+                        
+                        <div class="mt-4 flex justify-between items-center text-xs text-gray-500">
+                            <div>${r.servings} servings • ${r.difficulty}</div>
+                            <div class="text-emerald-600 font-medium group-hover:underline">View Recipe →</div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function initRecipeFilters() {
+            const searchInput = document.getElementById('recipe-search');
+            const filterBtns = document.querySelectorAll('#recipe-filters button');
+            
+            let currentFilter = 'all';
+            
+            function applyRecipeFilters() {
+                let filtered = recipes;
+                
+                // Category filter
+                if (currentFilter !== 'all') {
+                    if (currentFilter === 'vegan') filtered = filtered.filter(r => r.dietary === 'vegan');
+                    else if (currentFilter === 'quick') filtered = filtered.filter(r => parseInt(r.time) < 30);
+                    else if (currentFilter === 'indian') filtered = filtered.filter(r => r.category === 'indian');
+                    else if (currentFilter === 'fusion') filtered = filtered.filter(r => r.category === 'fusion');
+                }
+                
+                // Search
+                const term = searchInput.value.toLowerCase().trim();
+                if (term) {
+                    filtered = filtered.filter(r => 
+                        r.title.toLowerCase().includes(term) || 
+                        r.description.toLowerCase().includes(term) ||
+                        r.tags.join(' ').toLowerCase().includes(term)
+                    );
+                }
+                
+                renderRecipes(filtered);
+            }
+            
+            // Search listener
+            searchInput.addEventListener('input', applyRecipeFilters);
+            
+            // Filter buttons
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('filter-active', 'bg-[#C2410C]', 'text-white'));
+                    btn.classList.add('filter-active', 'bg-[#C2410C]', 'text-white');
+                    
+                    currentFilter = btn.dataset.filter;
+                    applyRecipeFilters();
+                });
+            });
+            
+            // Initial render
+            renderRecipes(recipes);
+        }
+
+        function initializeRecipesPage() {
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            initRecipeFilters();
+        }
+        
+        window.onload = initializeRecipesPage;
+    </script>
+</body>
+</html>

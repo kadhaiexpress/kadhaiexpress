@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Data-driven insights into vegetarian and plant-based food trends in India and globally. Credited statistics and analysis.">
+    <title>Trends &amp; Data • Kadhai Express</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-[#FDF8F0]">
+    <nav class="bg-white border-b">
+        <div class="max-w-screen-2xl mx-auto px-8 py-5 flex justify-between">
+            <a href="index.html" class="flex items-center gap-x-3"><span class="font-bold text-2xl tracking-tighter">Kadhai Express</span></a>
+            <a href="index.html" class="text-sm">← Home</a>
+        </div>
+    </nav>
+
+    <div class="max-w-screen-2xl mx-auto px-8 pt-10 pb-16">
+        <h1 class="text-5xl font-bold tracking-tighter mb-2">Trends &amp; Data</h1>
+        <p class="text-xl text-gray-600 max-w-3xl">Evidence-based analysis of vegetarian and plant-based food movements in India and around the world. All sources credited.</p>
+
+        <div class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Stat Cards -->
+            <div class="bg-white border rounded-3xl p-8">
+                <div class="text-sm text-emerald-700 font-bold tracking-widest">INDIA • 2026</div>
+                <div class="text-6xl font-bold tracking-tighter mt-2">29.5%</div>
+                <div class="text-lg">of the population follows a vegetarian diet</div>
+                <div class="mt-4 text-sm text-gray-500">Approximately 276 million people. India has the highest absolute number of vegetarians globally.<br>Source: World Population Review (2026 compilation)</div>
+            </div>
+            
+            <div class="bg-white border rounded-3xl p-8">
+                <div class="text-sm text-emerald-700 font-bold tracking-widest">GLOBAL PLANT-BASED MARKET</div>
+                <div class="text-6xl font-bold tracking-tighter mt-2">$32.9B</div>
+                <div class="text-lg">estimated value in 2026</div>
+                <div class="mt-4 text-sm text-gray-500">Projected to reach $54.4 billion by 2032 (CAGR ~8.7%). Strong growth in dairy alternatives and meat substitutes.<br>Source: MMR Statistics, 2026</div>
+            </div>
+        </div>
+
+        <div class="mt-8 bg-white border rounded-3xl p-8">
+            <h3 class="font-semibold mb-4">India State-wise Vegetarian Population (Highest %)</h3>
+            <canvas id="states-chart" height="110"></canvas>
+            <p class="text-xs text-gray-500 mt-3">Note: Significant regional variation exists due to culture, religion, and socio-economic factors. Data compiled from NFHS and state surveys.</p>
+        </div>
+
+        <div class="mt-8 text-sm text-gray-600 max-w-prose">
+            <strong>Key Observations (2026):</strong>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+                <li>India remains the global leader in both percentage and absolute numbers of vegetarians.</li>
+                <li>Plant-based market growth is strong but India’s plant-based packaged food market is still emerging compared to its traditional home-cooked vegetarian base.</li>
+                <li>Health, sustainability, and flexitarian trends are accelerating adoption in urban India and globally.</li>
+            </ul>
+            <p class="mt-4 text-xs">We update this page as new credible data from government surveys, FAO, and peer-reviewed research becomes available. All figures include source attribution.</p>
+        </div>
+    </div>
+
+    <script>
+        function initCharts() {
+            const ctx = document.getElementById('states-chart');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Rajasthan', 'Haryana', 'Himachal Pradesh', 'Punjab', 'Gujarat', 'Maharashtra', 'Uttar Pradesh', 'Delhi'],
+                    datasets: [{
+                        label: 'Vegetarian %',
+                        data: [75, 70, 70, 66, 62, 50, 47, 40],
+                        backgroundColor: '#166534'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } }
+                }
+            });
+        }
+        window.onload = function() {
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            initCharts();
+        }
+    </script>
+</body>
+</html>

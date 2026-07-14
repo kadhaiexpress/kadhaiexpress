@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the rich world of vegetarian ingredients — spices, grains, legumes, and more. India-focused with global connections.">
+    <title>Ingredient Explorer • Kadhai Express</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .ingredient-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .ingredient-card:hover { transform: translateY(-6px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+    </style>
+</head>
+<body class="bg-[#FDF8F0]">
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-8 py-5 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-x-3">
+                <div class="w-10 h-10 bg-[#C2410C] rounded-2xl flex items-center justify-center"><span class="text-white text-2xl">🍲</span></div>
+                <span class="font-bold text-2xl tracking-tighter">Kadhai <span class="text-[#C2410C]">Express</span></span>
+            </a>
+            <a href="index.html" class="text-sm px-5 py-2 rounded-3xl border">← Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="max-w-screen-2xl mx-auto px-8 pt-10 pb-16">
+        <div class="text-center mb-12">
+            <div class="inline-block px-4 py-1 bg-emerald-100 text-emerald-700 rounded-2xl text-xs font-bold tracking-widest mb-4">DISCOVER • LEARN • COOK</div>
+            <h1 class="text-5xl font-bold tracking-tighter">Ingredient Explorer</h1>
+            <p class="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">Dive deep into the building blocks of vegetarian cuisine — from ancient Indian staples to global superfoods.</p>
+        </div>
+
+        <!-- Search -->
+        <div class="max-w-md mx-auto mb-10">
+            <div class="relative">
+                <input id="ingredient-search" type="text" placeholder="Search ingredients (turmeric, millet, chickpea...)" 
+                       class="w-full pl-11 py-3 border border-gray-300 rounded-3xl text-sm focus:border-[#C2410C]">
+                <i data-lucide="search" class="absolute left-4 top-3.5 w-4 h-4 text-gray-400"></i>
+            </div>
+        </div>
+
+        <div id="ingredients-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <footer class="bg-white border-t py-8 text-center text-xs text-gray-500">
+        © 2026 Kadhai Express • All content original or credited
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        const ingredients = [
+            { name: "Turmeric (Haldi)", category: "Spice", origin: "India & Southeast Asia", benefits: "Anti-inflammatory, antioxidant, vibrant color", uses: "Curries, golden milk, rice, pickles", funFact: "Called 'Indian saffron' — used for over 4,000 years in Ayurveda." },
+            { name: "Foxtail Millet", category: "Grain", origin: "India, China, Africa", benefits: "High fiber, gluten-free, low glycemic, drought-resistant", uses: "Upma, khichdi, rotis, porridge, snacks", funFact: "One of the oldest cultivated crops in India — making a strong comeback for climate resilience." },
+            { name: "Chickpea (Chana)", category: "Legume", origin: "Middle East & India", benefits: "High protein, fiber, iron; versatile base for many dishes", uses: "Chana masala, hummus, falafel, besan, sprouts", funFact: "India produces over 70% of the world’s chickpeas." },
+            { name: "Cardamom (Elaichi)", category: "Spice", origin: "India & Sri Lanka", benefits: "Aids digestion, freshens breath, aromatic", uses: "Desserts, chai, biryani, savory curries", funFact: "The world’s third most expensive spice after saffron and vanilla." },
+            { name: "Finger Millet (Ragi)", category: "Grain", origin: "India & Africa", benefits: "Extremely high in calcium, good for bones and diabetes", uses: "Ragi mudde, porridge, rotis, cookies, malt", funFact: "Often called 'poor man’s food' but now celebrated as a superfood." },
+            { name: "Cumin (Jeera)", category: "Spice", origin: "India & Middle East", benefits: "Digestive aid, rich in iron, distinctive earthy flavor", uses: "Tadka, curries, rice dishes, chaat, pickles", funFact: "One of the most used spices in Indian vegetarian cooking." },
+            { name: "Mustard Seeds (Sarson)", category: "Spice", origin: "India & Europe", benefits: "Digestive, anti-inflammatory, pungent flavor", uses: "Tadka, pickles, curries, Bengali dishes", funFact: "Black, brown, and yellow varieties are all used across India." },
+            { name: "Asafoetida (Hing)", category: "Spice", origin: "Iran & India", benefits: "Digestive aid, strong umami flavor, used as onion/garlic substitute", uses: "Tadka, dals, vegetable dishes", funFact: "Essential in Jain and some Vaishnav cooking as onion/garlic substitute." },
+            { name: "Fenugreek (Methi)", category: "Herb/Spice", origin: "India & Mediterranean", benefits: "Blood sugar control, digestive, bitter taste", uses: "Theplas, curries, pickles, kasuri methi", funFact: "Both leaves and seeds are widely used in Indian vegetarian cooking." },
+            { name: "Green Gram (Moong Dal)", category: "Legume", origin: "India", benefits: "Easy to digest, high protein, cooling for the body", uses: "Khichdi, dal, sprouts, sweets like moong dal halwa", funFact: "Considered one of the most sattvic (pure) foods in Ayurveda." },
+            { name: "Black Gram (Urad Dal)", category: "Legume", origin: "India", benefits: "High protein, good for heart and digestion", uses: "Idli, dosa, vada, dal makhani, papad", funFact: "Key ingredient in South Indian fermentation dishes." },
+            { name: "Pigeon Pea (Toor/Arhar Dal)", category: "Legume", origin: "India & Africa", benefits: "High protein and fiber, staple across India", uses: "Sambar, dal, rasam, khichdi", funFact: "One of the most consumed dals in Indian households." },
+            { name: "Coriander (Dhania)", category: "Herb/Spice", origin: "India & Mediterranean", benefits: "Cooling, digestive, fresh flavor", uses: "Garnish, chutneys, curries, spice blends", funFact: "Both fresh leaves and dried seeds are used extensively." },
+            { name: "Fennel (Saunf)", category: "Spice", origin: "India & Mediterranean", benefits: "Digestive, sweet flavor, cooling", uses: "Mukhwas, curries, sweets, tea", funFact: "Commonly chewed after meals as a digestive." },
+            { name: "Cloves (Laung)", category: "Spice", origin: "Indonesia & India", benefits: "Antiseptic, strong aromatic flavor", uses: "Biryani, curries, garam masala, teas", funFact: "One of the most aromatic and potent spices." },
+            { name: "Cinnamon (Dalchini)", category: "Spice", origin: "Sri Lanka & India", benefits: "Blood sugar regulation, warm flavor", uses: "Desserts, curries, chai, garam masala", funFact: "True Ceylon cinnamon is considered superior." },
+            { name: "Bay Leaf (Tej Patta)", category: "Herb", origin: "India & Mediterranean", benefits: "Aromatic, digestive", uses: "Curries, rice, biryani, soups", funFact: "Indian bay leaf has a distinct flavor from Mediterranean bay." },
+            { name: "Amchur (Dry Mango Powder)", category: "Spice", origin: "India", benefits: "Tangy flavor, digestive aid, vitamin C", uses: "Chaat, curries, pickles, snacks", funFact: "Made from unripe mangoes — a staple in North Indian cooking." },
+            { name: "Sesame Seeds (Til)", category: "Seed", origin: "India & Africa", benefits: "Rich in calcium, healthy fats, nutty flavor", uses: "Sweets (til laddoo), tahini, curries, garnish", funFact: "Black sesame is especially valued in Ayurveda." },
+            { name: "Jackfruit (Kathal)", category: "Vegetable/Fruit", origin: "India & Southeast Asia", benefits: "Meat-like texture when unripe, high fiber", uses: "Curries, biryani, snacks, vegan 'meat'", funFact: "The world's largest tree-borne fruit and a popular meat substitute." },
+            { name: "Bottle Gourd (Lauki)", category: "Vegetable", origin: "India & Africa", benefits: "Cooling, hydrating, low calorie", uses: "Dal, kofta, halwa, juice", funFact: "Highly recommended in Ayurveda for its cooling properties." },
+            { name: "Drumstick (Sahjan/Moringa)", category: "Vegetable", origin: "India & Africa", benefits: "Extremely nutritious, anti-inflammatory", uses: "Sambar, curries, stir-fries, soups", funFact: "Moringa leaves are considered a superfood globally." },
+            { name: "Okra (Bhindi)", category: "Vegetable", origin: "India & Africa", benefits: "High fiber, good for digestion and blood sugar", uses: "Fry, masala, sambar, stuffed", funFact: "Also known as 'lady’s finger' in many regions." },
+            { name: "Brinjal (Baingan/Eggplant)", category: "Vegetable", origin: "India & China", benefits: "Rich in fiber and antioxidants", uses: "Bharta, fry, curries, bharwa baingan", funFact: "India has hundreds of varieties of brinjal." },
+            { name: "Bitter Gourd (Karela)", category: "Vegetable", origin: "India & Asia", benefits: "Blood sugar control, detoxifying", uses: "Fry, stuffed, juice, chips", funFact: "Despite its bitterness, it's highly valued for health benefits." }
+        ];
+
+        function renderIngredients(filtered) {
+            const grid = document.getElementById('ingredients-grid');
+            grid.innerHTML = '';
+            
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = `ingredient-card bg-white border border-gray-200 rounded-3xl p-6`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-xs uppercase tracking-widest text-emerald-700 font-bold">${item.category}</div>
+                            <h3 class="text-2xl font-semibold tracking-tight mt-1">${item.name}</h3>
+                        </div>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div><span class="font-medium text-gray-500">Origin:</span> ${item.origin}</div>
+                        <div><span class="font-medium text-gray-500">Key Benefits:</span> ${item.benefits}</div>
+                        <div><span class="font-medium text-gray-500">Common Uses:</span> ${item.uses}</div>
+                        <div class="pt-2 border-t text-emerald-700 italic">"${item.funFact}"</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function initIngredientSearch() {
+            const input = document.getElementById('ingredient-search');
+            input.addEventListener('input', () => {
+                const term = input.value.toLowerCase().trim();
+                const filtered = ingredients.filter(i => 
+                    i.name.toLowerCase().includes(term) || 
+                    i.category.toLowerCase().includes(term) ||
+                    i.uses.toLowerCase().includes(term)
+                );
+                renderIngredients(filtered);
+            });
+            
+            // Initial render
+            renderIngredients(ingredients);
+        }
+
+        function initExplorer() {
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            initIngredientSearch();
+        }
+        
+        window.onload = initExplorer;
+    </script>
+</body>
+</html>
