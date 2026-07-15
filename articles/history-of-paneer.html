@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The fascinating history of Paneer in Indian cuisine — from ancient origins to modern kitchens.">
+    <title>The History of Paneer in Indian Cuisine • Kadhai Express</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .prose p { line-height: 1.8; color: #374151; }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(to right, #C2410C, #166534); z-index: 9999; }
+    </style>
+</head>
+<body class="bg-[#FDF8F0]">
+    <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+    
+    <nav class="bg-white border-b">
+        <div class="max-w-screen-xl mx-auto px-6 py-4 flex justify-between">
+            <a href="../index.html" class="font-bold text-xl">Kadhai Express</a>
+            <a href="../articles.html" class="text-sm px-4 py-2 rounded-2xl border">← All Articles</a>
+        </div>
+    </nav>
+
+    <article class="max-w-screen-xl mx-auto px-6 pt-10 pb-20">
+        <div class="max-w-[72ch] mx-auto">
+            <div class="flex items-center gap-x-3 text-sm text-gray-500 mb-4">
+                <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-2xl text-xs font-medium">HISTORY • INGREDIENTS</span>
+                <span>July 2026</span>
+                <span>•</span>
+                <span>9 min read</span>
+            </div>
+            
+            <h1 class="text-5xl font-bold tracking-tighter">The History of Paneer in Indian Cuisine</h1>
+            <p class="mt-4 text-xl text-gray-600">From ancient roots to the modern Indian kitchen — how paneer became one of India’s most beloved vegetarian proteins.</p>
+
+            <div class="mt-6">
+                <button id="read-aloud-btn" class="inline-flex items-center gap-x-2 px-5 py-2.5 bg-emerald-600 text-white text-sm font-semibold rounded-3xl">
+                    <i data-lucide="volume-2" class="w-4 h-4"></i> Listen to this article
+                </button>
+            </div>
+
+            <div class="prose prose-lg mt-10">
+                <p>Paneer, the fresh Indian cheese, is one of the most versatile and beloved ingredients in vegetarian cooking. But where did it come from?</p>
+
+                <h2>Ancient Origins</h2>
+                <p>While the exact origin is debated, many food historians believe paneer-like cheeses were made in ancient India using natural acids like lemon juice or yogurt. References to fresh cheese appear in texts from the medieval period.</p>
+
+                <h2>Influence of Persian and Afghan Cuisine</h2>
+                <p>During the medieval period, Persian and Afghan influences brought new techniques. The word "paneer" itself comes from Persian, meaning "cheese". This period saw the popularization of paneer in rich gravies and kebabs.</p>
+
+                <h2>Modern Popularity</h2>
+                <p>Today, paneer is a staple across India — from North Indian butter masala to South Indian paneer 65. It is high in protein, easy to make at home, and incredibly versatile.</p>
+
+                <p>At Kadhai Express, we celebrate both the traditional roots and modern innovations of this iconic ingredient.</p>
+            </div>
+
+            <div class="mt-12 text-sm text-gray-500">
+                Sources: Food historians, medieval Indian texts, culinary research papers.
+            </div>
+        </div>
+    </article>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        function initReadAloud() {
+            const btn = document.getElementById('read-aloud-btn');
+            if (!btn) return;
+            let speaking = false;
+            btn.addEventListener('click', () => {
+                const synth = window.speechSynthesis;
+                if (!synth) { alert('Text-to-speech not supported'); return; }
+                if (speaking) { synth.cancel(); speaking = false; btn.innerHTML = '<i data-lucide="volume-2" class="w-4 h-4 inline"></i> Listen'; return; }
+                const text = document.querySelector('article').innerText;
+                const u = new SpeechSynthesisUtterance(text);
+                u.onend = () => { speaking = false; btn.innerHTML = '<i data-lucide="volume-2" class="w-4 h-4 inline"></i> Listen'; };
+                synth.speak(u);
+                speaking = true;
+                btn.innerHTML = 'Stop';
+            });
+        }
+        function initProgress() {
+            const bar = document.getElementById('progress-bar');
+            window.addEventListener('scroll', () => {
+                const percent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+                bar.style.width = Math.min(percent, 100) + '%';
+            });
+        }
+        window.onload = () => { 
+            if (typeof lucide !== 'undefined') lucide.createIcons(); 
+            initReadAloud(); 
+            initProgress(); 
+        };
+    </script>
+</body>
+</html>

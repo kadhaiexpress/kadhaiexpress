@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Exploring the rich and diverse vegetarian traditions of South India — from temple prasadam to everyday home cooking.">
+    <title>South Indian Vegetarian Traditions • Kadhai Express</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .prose p { line-height: 1.8; color: #374151; }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(to right, #C2410C, #166534); z-index: 9999; }
+    </style>
+</head>
+<body class="bg-[#FDF8F0]">
+    <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+    
+    <nav class="bg-white border-b">
+        <div class="max-w-screen-xl mx-auto px-6 py-4 flex justify-between">
+            <a href="../index.html" class="font-bold text-xl">Kadhai Express</a>
+            <a href="../articles.html" class="text-sm px-4 py-2 rounded-2xl border">← All Articles</a>
+        </div>
+    </nav>
+
+    <article class="max-w-screen-xl mx-auto px-6 pt-10 pb-20">
+        <div class="max-w-[72ch] mx-auto">
+            <div class="flex items-center gap-x-3 text-sm text-gray-500 mb-4">
+                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-2xl text-xs font-medium">REGIONAL • INDIA</span>
+                <span>July 2026</span>
+                <span>•</span>
+                <span>10 min read</span>
+            </div>
+            
+            <h1 class="text-5xl font-bold tracking-tighter">South Indian Vegetarian Traditions</h1>
+            <p class="mt-4 text-xl text-gray-600">From ancient temple kitchens to modern homes — the deep-rooted vegetarian heritage of South India.</p>
+
+            <div class="mt-6">
+                <button id="read-aloud-btn" class="inline-flex items-center gap-x-2 px-5 py-2.5 bg-emerald-600 text-white text-sm font-semibold rounded-3xl">
+                    <i data-lucide="volume-2" class="w-4 h-4"></i> Listen to this article
+                </button>
+            </div>
+
+            <div class="prose prose-lg mt-10">
+                <p>South India has one of the most sophisticated and diverse vegetarian food cultures in the world. Influenced by temple traditions, Ayurveda, and regional ingredients, South Indian vegetarian food is light, flavorful, and deeply nourishing.</p>
+
+                <h2>Temple Prasadam Tradition</h2>
+                <p>Many iconic dishes like idli, dosa, sambar, and payasam originated or were popularized through temple kitchens. Prasadam (offering) follows strict vegetarian rules and seasonal ingredients.</p>
+
+                <h2>Signature Dishes</h2>
+                <ul>
+                    <li>Idli, Dosa, Vada, Pongal</li>
+                    <li>Sambar, Rasam, Avial, Kootu</li>
+                    <li>Filter coffee and traditional sweets</li>
+                </ul>
+
+                <p>The use of coconut, curry leaves, mustard seeds, and tamarind gives South Indian food its unique identity.</p>
+
+                <p>At Kadhai Express, we celebrate both the ancient temple roots and the everyday home cooking of South India.</p>
+            </div>
+
+            <div class="mt-12 text-sm text-gray-500">
+                Sources: Temple records, traditional cookbooks, culinary historians.
+            </div>
+        </div>
+    </article>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        function initReadAloud() {
+            const btn = document.getElementById('read-aloud-btn');
+            if (!btn) return;
+            let speaking = false;
+            btn.addEventListener('click', () => {
+                const synth = window.speechSynthesis;
+                if (!synth) { alert('Text-to-speech not supported'); return; }
+                if (speaking) { synth.cancel(); speaking = false; btn.innerHTML = '<i data-lucide="volume-2" class="w-4 h-4 inline"></i> Listen'; return; }
+                const text = document.querySelector('article').innerText;
+                const u = new SpeechSynthesisUtterance(text);
+                u.onend = () => { speaking = false; btn.innerHTML = '<i data-lucide="volume-2" class="w-4 h-4 inline"></i> Listen'; };
+                synth.speak(u);
+                speaking = true;
+                btn.innerHTML = 'Stop';
+            });
+        }
+        function initProgress() {
+            const bar = document.getElementById('progress-bar');
+            window.addEventListener('scroll', () => {
+                const percent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+                bar.style.width = Math.min(percent, 100) + '%';
+            });
+        }
+        window.onload = () => { 
+            if (typeof lucide !== 'undefined') lucide.createIcons(); 
+            initReadAloud(); 
+            initProgress(); 
+        };
+    </script>
+</body>
+</html>
