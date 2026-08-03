@@ -407,24 +407,15 @@
                     </div>
                 </div>
 
-                <!-- Chart 1: Market Growth -->
+                <!-- India Regional stats (compact) -->
                 <div class="lg:col-span-7 bg-white border border-gray-200 rounded-3xl p-7">
-                    <div class="flex justify-between items-center mb-5">
-                        <div>
-                            <div class="font-semibold">Global Plant-Based Food Market Growth</div>
-                            <div class="text-xs text-gray-500">USD Billion • Data: MMR Statistics &amp; industry reports</div>
-                        </div>
-                    </div>
-                    <canvas id="market-growth-chart" height="60"></canvas>
-                </div>
-
-                <!-- Chart 2: India Regional -->
-                <div class="lg:col-span-12 bg-white border border-gray-200 rounded-3xl p-7 mt-2">
                     <div class="mb-5">
                         <div class="font-semibold">Vegetarian Population by Indian State (Highest %)</div>
                         <div class="text-xs text-gray-500">Data based on NFHS-5 and state-level surveys • Significant cultural variation exists</div>
                     </div>
-                    <canvas id="india-states-chart" height="50"></canvas>
+                    <div class="relative w-full" style="height:220px;max-height:240px;">
+                        <canvas id="india-states-chart"></canvas>
+                    </div>
                 </div>
             </div>
             
@@ -705,43 +696,7 @@
             });
         }
         
-        // Chart.js - Market Growth
-        function initMarketChart() {
-            const ctx = document.getElementById('market-growth-chart');
-            if (!ctx) return;
-            
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['2025', '2026', '2027', '2028', '2029', '2030', '2031', '2032'],
-                    datasets: [{
-                        label: 'Global Plant-Based Market (USD Billion)',
-                        data: [30.41, 32.89, 35.63, 38.65, 42.01, 45.72, 49.84, 54.41],
-                        borderColor: '#C2410C',
-                        backgroundColor: 'rgba(194, 65, 12, 0.08)',
-                        borderWidth: 3,
-                        tension: 0.35,
-                        fill: true,
-                        pointBackgroundColor: '#C2410C',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: '#F3F4F6' }, ticks: { color: '#6B7280', font: { size: 11 } } },
-                        x: { grid: { color: '#F3F4F6' }, ticks: { color: '#6B7280', font: { size: 11 } } }
-                    },
-                    elements: { line: { borderJoinStyle: 'round' } }
-                }
-            });
-        }
-        
-        // Chart.js - India States
+        // Chart.js - India States (fixed compact height)
         function initIndiaStatesChart() {
             const ctx = document.getElementById('india-states-chart');
             if (!ctx) return;
@@ -800,7 +755,6 @@
             initTailwind();
             initMobileMenu();
             initGlobalSearch();
-            initMarketChart();
             initIndiaStatesChart();
             initDarkMode();
             
